@@ -1,5 +1,9 @@
+import pico2d
 from pico2d import *
+import title_state
+import menu_state
 import random
+import game_framework
 
 class Dragon:
     def __init__(self):
@@ -30,10 +34,10 @@ def handle_events():
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
-            running = False
+            game_framework.quit()
         elif event.type == SDL_KEYDOWN:
-            if event.type == SDLK_ESCAPE:
-                running = False
+            if event.type == SDLK_ESCAPE:   # press esc to move menu
+                game_framework.change_state(menu_state)
             elif event.type == SDLK_w:  # up
                 pass
             elif event.type == SDLK_a:  # left
@@ -52,7 +56,14 @@ def handle_events():
             elif event.type == SDLK_d:  # right
                 pass
 
+def test_self():
+    import sys
+    pico2d.open_canvas(800, 950)
+    game_framework.run(sys.modules['__main__'])
+    pico2d.clear_canvas()
 
+if __name__ == '__main__':
+    test_self()
 
 
 open_canvas(800, 950)
