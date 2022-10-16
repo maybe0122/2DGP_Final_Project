@@ -1,6 +1,7 @@
 from pico2d import *
 
 import game_framework
+import count_state
 import play_state
 
 image = None
@@ -23,7 +24,8 @@ def handle_events():
                 if event.key == SDLK_ESCAPE:
                     game_framework.quit()
                 elif event.key == SDLK_SPACE:
-                    game_framework.change_state(play_state)
+                    game_framework.change_state(count_state)
+                    # game_framework.change_state(play_state)
 def draw():
     clear_canvas()
     image.draw(800 // 2, 950 // 2)

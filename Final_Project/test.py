@@ -6,5 +6,5 @@ import play_state
 import title_state
 
 pico2d.open_canvas(800, 950)
-game_framework.run(logo_state)  # test state
+game_framework.run(play_state)  # test state
 pico2d.close_canvas()
