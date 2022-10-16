@@ -15,7 +15,7 @@ def exit():
 
 def update():
     global logo_time
-    if logo_time > 1.0:
+    if logo_time > 0.5:
         logo_time = 0
         game_framework.change_state(title_state)
     delay(0.01)
@@ -23,7 +23,7 @@ def update():
 
 def draw():
     clear_canvas()
-    image.draw(0, 0)
+    image.draw(800 // 2, 950 // 2)
     update_canvas()
 
 def handle_events():
