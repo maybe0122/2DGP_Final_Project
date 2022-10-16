@@ -18,8 +18,8 @@ class Dragon:
         self.frame = (self.frame + 1) % 3
         self.x += self.dir_x * 1
         self.y += self.dir_y * 1
-        self.x = clamp(0 + 64, self.x, 800 - 72)
-        self.y = clamp(0 + 64, self.y, 950 - 72)
+        self.x = clamp(0 + 72, self.x, 800 - 72)
+        self.y = clamp(0 + 54, self.y, 950 - 54)
 
 
     def draw(self):
