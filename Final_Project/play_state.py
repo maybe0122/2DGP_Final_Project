@@ -1,12 +1,17 @@
-import pico2d
 from pico2d import *
+import game_framework
+import game_world
+
+from dragon import Dragon
+
 import title_state
 import menu_state
 import random
-import game_framework
+
 import count_state
 import dragon
 
+dragon = None
 def handle_events():
     events = get_events()
     for event in events:
@@ -17,26 +22,18 @@ def handle_events():
         else:
             dragon.handle_events(event)
 
-running = True
-dragon = None
-
-def test_self():
-    import sys
-    pico2d.open_canvas(800, 950)
-    game_framework.run(sys.modules['__main__'])
-    pico2d.clear_canvas()
 
 def enter():
-    global running, dragon
-    dragon = dragon.Dragon()
-    running = True
+    global dragon
+    dragon = Dragon()
+    game_world.add_object(dragon, 0)
 
 def exit():
-    global dragon
-    del dragon
+    game_world.clear()
 
 def update():
-    dragon.update()
+    for game_object in game_world.all_object():
+        game_object.update()
 
 def draw():
     clear_canvas()
@@ -44,13 +41,22 @@ def draw():
     update_canvas()
 
 def draw_world():
-    dragon.draw()
+    for game_object in game_world.all_object():
+        game_object.draw()
 
 def pause():
     pass
 
 def resume():
     pass
+
+def test_self():
+    import play_state
+
+    pico2d.open_canvas(800, 950)
+    game_framework.run(play_state)
+    pico2d.clear_canvas()
+
 
 if __name__ == '__main__':
     test_self()
