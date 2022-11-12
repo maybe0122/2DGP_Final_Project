@@ -7,6 +7,8 @@ image = None
 frame = 0
 count = 3
 
+# 수정 필요
+
 def enter():
     global image
     image = load_image('source/image/count.png')
@@ -26,13 +28,7 @@ def update():
     count -= 1
 
 def draw():
-    global frame
-    clear_canvas()
-    image.clip_draw(frame * 134, 0, 134, 255, 400, 950 // 2)
-    frame += 1
-    if frame > 1:
-        delay(1)
-    update_canvas()
+    pass
 
 def handle_events():
     events = get_events()

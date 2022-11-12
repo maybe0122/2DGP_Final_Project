@@ -5,10 +5,12 @@ import count_state
 import play_state
 
 image = None
+font = None
 
 def enter():
-    global image
-    image = load_image('source/image/title_2.png')  #add title image
+    global image, font
+    image = load_image('source/image/title_2.png')
+    font = load_font('ENCR10B.TTF', 50)
 
 def exit():
     global image
@@ -28,7 +30,8 @@ def handle_events():
                     # game_framework.change_state(play_state)
 def draw():
     clear_canvas()
-    image.draw(800 // 2, 950 // 2)
+    image.draw(750 // 2, 900 // 2)
+    font.draw(80, 110, 'Press Space to Start', (255, 0, 0))
     update_canvas()
 
 def update():

@@ -6,7 +6,7 @@ import game_framework
 
 # start_state = [logo_state, title_state, play_state]
 states = [logo_state]
-pico2d.open_canvas(800, 950)
+pico2d.open_canvas(740, 800)
 
 
 # for state in start_state:
