@@ -16,7 +16,7 @@ class Attack:
         if Attack.image == None:
             Attack.image = load_image('source/image/basic_fire.png')
         self.x, self.y, self.velocity = x, y, velocity
-        self.damage = 100
+        self.damage = 20
 
     def draw(self):
         self.image.clip_composite_draw(370, 134 - 50, 80, 50, 3.141592 / 2, '', self.x, self.y + 64, 80, 40)
@@ -32,9 +32,8 @@ class Attack:
         return self.x - 10, self.y - 35 + 64, self.x + 15, self.y + 35 + 64
 
     def handle_collision(self, other, group):
-        pass
-        # if group == 'attack:enemy':
-        #     game_world.remove_object(self)
+        if group == 'attack:enemy':
+            game_world.remove_object(self)
 
 class Breath:
     image = None

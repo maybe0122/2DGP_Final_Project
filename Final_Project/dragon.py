@@ -109,6 +109,7 @@ class Dragon:
         self.dir_x = 0
         self.dir_y = 0
         self.face_dir = 1
+        self.health = 100
         self.image = load_image('source/image/flying_dragon-red.png')
         self.font = load_font('ENCR10B.TTF', 16)    # change font size later
 
@@ -142,9 +143,9 @@ class Dragon:
             self.add_event(key_event)
 
     def basic_attack(self):
-        play_state.attack += [Attack(self.x, self.y, self.face_dir*2)]
-        game_world.add_objects(play_state.attack, 1)
-        # game_world.add_collision_pairs(play_state.attack, play_state.enemies, 'attack:enemy')
+        play_state.attack = Attack(self.x, self.y, self.face_dir*2)
+        game_world.add_object(play_state.attack, 1)
+        game_world.add_collision_pairs(play_state.attack, None, 'attack:enemy')
 
     def breath(self):
         play_state.attack += [Breath()]

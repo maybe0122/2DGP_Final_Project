@@ -16,7 +16,7 @@ import count_state
 player = None
 enemies = []
 background = None
-attack = []
+attack = None
 def handle_events():
     events = get_events()
     for event in events:
@@ -45,7 +45,7 @@ def enter():
     # 충돌 그룹 추가
 
     game_world.add_collision_pairs(player, enemies, 'player:enemy')
-    game_world.add_collision_pairs(attack, enemies, 'attack:enemy')
+    game_world.add_collision_pairs(None, enemies, 'attack:enemy')
 
 
 def exit():
