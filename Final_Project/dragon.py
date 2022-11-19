@@ -5,6 +5,9 @@ import game_world
 import play_state
 from attack import Attack, Breath
 
+#플레이어의 최대 체력
+MAX_HEALTH = 50
+
 # Dragon Fly Speed
 PIXEL_PER_METER = (10.0 / 0.3)
 FLY_SPEED_KMPH = 20.0
@@ -109,9 +112,9 @@ class Dragon:
         self.dir_x = 0
         self.dir_y = 0
         self.face_dir = 1
-        self.health = 100
+        self.health = MAX_HEALTH
         self.image = load_image('source/image/flying_dragon-red.png')
-        self.font = load_font('ENCR10B.TTF', 16)    # change font size later
+        self.font = load_font('source/font/ENCR10B.TTF', 16)    # change font size later
 
         self.event_que = []
         self.cur_state = IDLE
@@ -155,5 +158,6 @@ class Dragon:
         return self.x - 72, self.y - 64, self.x + 72, self.y + 64
 
     def handle_collision(self, other, group):
-        pass
+        if group == 'player:enemy':
+            self.health -= 10
 
