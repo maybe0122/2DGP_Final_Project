@@ -1,6 +1,8 @@
 from pico2d import *
 import game_world
 import random
+import background
+from item import Item
 
 import play_state
 from attack import Attack, Breath
@@ -12,8 +14,9 @@ class Enemy1:
         self.x, self.y = random.randint(55, 750 - 55), 800 - 90
         self.dir_x = 0
         self.dir_y = 0
-        self.health = 100
+        self.health = 50
         self.damage = 10
+        self.face_dir = -1
 
 
         if Enemy1.image == None:
@@ -26,17 +29,24 @@ class Enemy1:
     def update(self):
         pass
 
+    def drop_item(self):
+        play_state.item = Item(self.x, self.y, self.face_dir*2)
+        game_world.add_object(play_state.item, 1)
+        game_world.add_collision_pairs(None, play_state.item, 'player:item')
+
     def get_bb(self):
         return self.x - 55, self.y - 45, self.x + 55, self.y + 45
 
     def handle_collision(self, other, group):
         if group == 'player:enemy':
-            game_world.remove_object(self)
+            pass
         elif group == 'attack:enemy':
             self.health -= other.damage
             print(other.damage)
             if self.health <= 0:
+                background.score += 100
                 game_world.remove_object(self)
+                self.drop_item()
 
 class Enemy2:
     image = None
