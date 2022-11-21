@@ -30,21 +30,21 @@ class Enemy1:
         pass
 
     def drop_item(self):
-        play_state.item = Item(self.x, self.y, self.face_dir*2)
-        game_world.add_object(play_state.item, 1)
-        game_world.add_collision_pairs(None, play_state.item, 'player:item')
+        play_state.items = Item(self.x, self.y, self.face_dir*2)
+        game_world.add_object(play_state.items, 1)
+        game_world.add_collision_pairs(None, play_state.items, 'player:item')
 
     def get_bb(self):
         return self.x - 55, self.y - 45, self.x + 55, self.y + 45
 
     def handle_collision(self, other, group):
         if group == 'player:enemy':
-            pass
-        elif group == 'attack:enemy':
+            game_world.remove_object(self)
+        elif group == 'attack:enemy':       # self : enemy, other : attack
             self.health -= other.damage
             print(other.damage)
             if self.health <= 0:
-                background.score += 100
+                play_state.player.score += 100
                 game_world.remove_object(self)
                 self.drop_item()
 
