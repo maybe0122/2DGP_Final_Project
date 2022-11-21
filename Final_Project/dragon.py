@@ -6,7 +6,7 @@ import play_state
 from attack import Attack, Breath
 
 #플레이어의 최대 체력
-MAX_HEALTH = 50
+MAX_HEALTH = 100
 
 # Dragon Fly Speed
 PIXEL_PER_METER = (10.0 / 0.3)
@@ -88,8 +88,8 @@ class MOVE:
 
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
-        self.x += self.dir_x * FLY_SPEED_PPS * game_framework.frame_time
-        self.y += self.dir_y * FLY_SPEED_PPS * game_framework.frame_time
+        self.x += self.dir_x * FLY_SPEED_PPS * game_framework.frame_time * self.speed
+        self.y += self.dir_y * FLY_SPEED_PPS * game_framework.frame_time * self.speed
         self.x = clamp(0 + 72, self.x, 800 - 72)
         self.y = clamp(0 + 54, self.y, 950 - 54)
         # print(self.event_que)
@@ -114,7 +114,10 @@ class Dragon:
         self.face_dir = 1
         self.health = MAX_HEALTH
         self.image = load_image('source/image/flying_dragon-red.png')
-        self.font = load_font('source/font/ENCR10B.TTF', 16)    # change font size later
+        self.font = load_font('source/font/ENCR10B.TTF', 16)
+        self.speed = 1.0
+        self.health_image = load_image('source/image/health.png')
+        self.score = 0
 
         self.event_que = []
         self.cur_state = IDLE
@@ -134,6 +137,7 @@ class Dragon:
 
     def draw(self):
         self.cur_state.draw(self)
+        self.draw_health(self.health // 10)
         draw_rectangle(*self.get_bb())
         # self.font.draw()
 
@@ -146,13 +150,22 @@ class Dragon:
             self.add_event(key_event)
 
     def basic_attack(self):
-        play_state.attack = Attack(self.x, self.y, self.face_dir*2)
-        game_world.add_object(play_state.attack, 1)
-        game_world.add_collision_pairs(play_state.attack, None, 'attack:enemy')
+        play_state.attacks = Attack(self.x, self.y, self.face_dir*2)
+        game_world.add_object(play_state.attacks, 1)
+        game_world.add_collision_pairs(play_state.attacks, None, 'attack:enemy')
 
     def breath(self):
-        play_state.attack += [Breath()]
-        game_world.add_objects(play_state.attack, 1)
+        play_state.attacks = Breath()
+        game_world.add_objects(play_state.attacks, 1)
+
+    def draw_health(self, i):
+        if i % 2 == 0:
+            for j in range(0, i // 2):
+                self.health_image.clip_draw(64, 15, 230, 230, 15 + 35 * j, 850, 35, 35)
+        else:
+            for j in range(0, i // 2):
+                self.health_image.clip_draw(64, 15, 230, 230, 15 + 35 * j, 850, 35, 35)
+            self.health_image.clip_draw(314, 15, 230, 230, 15 + 35 * (i // 2), 850, 35, 35)
 
     def get_bb(self):
         return self.x - 72, self.y - 64, self.x + 72, self.y + 64
