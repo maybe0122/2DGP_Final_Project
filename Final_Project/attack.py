@@ -13,8 +13,8 @@ class Attack:
     image = None
 
     def __init__(self, x=740, y=450, velocity=1):
-        if Attack.image == None:
-            Attack.image = load_image('source/image/basic_fire.png')
+        if self.image == None:
+            self.image = load_image('source/image/basic_fire.png')
         self.x, self.y, self.velocity = x, y, velocity
         self.damage = 10
 
@@ -54,3 +54,29 @@ class Breath:
 
     def handle_collision(self, other, group):
         pass
+
+class Enemy_Attack:
+    image = None
+
+    def __init__(self, x=740, y=450, velocity=1):
+        if Enemy_Attack.image == None:
+            Enemy_Attack.image = load_image('source/image/basic_fire.png')
+        self.x, self.y, self.velocity = x, y, velocity
+        self.damage = 10
+
+    def draw(self):
+        self.image.clip_composite_draw(370, 134 - 50, 80, 50, 3.141592 / 2, '', self.x, self.y + 64, 40, 20)
+        draw_rectangle(*self.get_bb())
+
+    def update(self):
+        self.y -= self.velocity * A_SPEED_PPS * game_framework.frame_time
+
+        if self.y < 0:
+            game_world.remove_object(self)
+
+    def get_bb(self):
+        return self.x - 10, self.y - 20 + 64, self.x + 10, self.y + 20 + 64
+
+    def handle_collision(self, other, group):
+        if group == 'player:attack':
+            pass
