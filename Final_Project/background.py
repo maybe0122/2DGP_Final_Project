@@ -1,6 +1,5 @@
 from pico2d import *
-
-score = 0
+import play_state
 
 class Background:
     def __init__(self):
@@ -9,7 +8,7 @@ class Background:
 
     def draw(self):
         self.image.draw(740 / 2, 900 / 2)
-        self.font.draw(5, 900 - 10, f'Score : {score}', (255, 0, 0))
+        self.font.draw(5, 900 - 10, f'Score : {play_state.player.score}', (255, 0, 0))
 
     def update(self):
         pass
