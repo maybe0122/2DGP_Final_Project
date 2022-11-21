@@ -5,7 +5,6 @@ import game_world
 from dragon import Dragon
 from enemy import Enemy1 #, Enemy2, Enemy3
 from background import Background
-from attack import Attack
 
 import title_state
 import menu_state
@@ -16,8 +15,8 @@ import count_state
 player = None
 enemies = []
 background = None
-attack = None
-item = None
+attacks = None
+items = None
 
 def handle_events():
     events = get_events()
@@ -35,7 +34,7 @@ def enter():
 
     # 객체 생성
     player = Dragon()
-    enemies = [Enemy1() for _ in range(2)] # + [Enemy2() for _ in range(2)] + [Enemy3() for _ in range(2)]
+    enemies = [Enemy1() for _ in range(10)] # + [Enemy2() for _ in range(2)] + [Enemy3() for _ in range(2)]
     background = Background()
 
     # 게임 월드에 객체 추가
@@ -48,6 +47,7 @@ def enter():
     game_world.add_collision_pairs(player, enemies, 'player:enemy')
     game_world.add_collision_pairs(None, enemies, 'attack:enemy')
     game_world.add_collision_pairs(player, None, 'player:item')
+    game_world.add_collision_pairs(player, None, 'player:Enemy_attack')
 
 
 def exit():
