@@ -10,7 +10,7 @@ from attack import Attack
 
 # item type
 # 0 : 체력 회복
-# 1 : 공격 피사체 속도 증가
+# 1 : 이동 속도 증가
 # 2 : 데미지 증가
 # 3 : 추가 점수
 
@@ -57,9 +57,11 @@ class Item:
                 if other.health != dragon.MAX_HEALTH:  # 플레이어가 최대 체력이 아닐 경우 10 회복
                     other.health += 10
             elif self.type == 1:
-                pass
+                other.speed += 0.01
+                print(other.speed)
             elif self.type == 2:
-                Attack().damage += 10
+                play_state.attacks.damage += 10    # 데미지가 증가 하지 않음 수정 필요
+                print(play_state.attacks.damage)
             elif self.type == 3:
-                background.score += random.randint(1, 6) * 100  # 100 ~ 500까지의 랜덤 점수 획득
+                play_state.player.score += random.randint(1, 6) * 100  # 100 ~ 500까지의 랜덤 점수 획득
             game_world.remove_object(self)
