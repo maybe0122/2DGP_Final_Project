@@ -107,7 +107,7 @@ next_state = {
 
 class Dragon:
     def __init__(self):
-        self.x, self.y = 800 // 2, 64
+        self.x, self.y = 750 // 2, 64
         self.frame = 0
         self.dir_x = 0
         self.dir_y = 0
@@ -118,6 +118,7 @@ class Dragon:
         self.speed = 1.0
         self.health_image = load_image('source/image/health.png')
         self.score = 0
+        self.player_damage = 10
 
         self.event_que = []
         self.cur_state = IDLE
@@ -156,7 +157,7 @@ class Dragon:
 
     def breath(self):
         play_state.attacks = Breath()
-        game_world.add_objects(play_state.attacks, 1)
+        game_world.add_object(play_state.attacks, 1)
 
     def draw_health(self, i):
         if i % 2 == 0:

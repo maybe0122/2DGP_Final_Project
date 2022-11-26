@@ -16,7 +16,6 @@ class Attack:
         if self.image == None:
             self.image = load_image('source/image/basic_fire.png')
         self.x, self.y, self.velocity = x, y, velocity
-        self.damage = 10
 
     def draw(self):
         self.image.clip_composite_draw(370, 134 - 50, 80, 50, 3.141592 / 2, '', self.x, self.y + 64, 40, 20)

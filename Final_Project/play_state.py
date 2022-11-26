@@ -9,7 +9,6 @@ from background import Background
 import title_state
 import menu_state
 import random
-import count_state
 
 
 player = None
@@ -30,7 +29,7 @@ def handle_events():
 
 
 def enter():
-    global player, enemies, background, attack
+    global player, enemies, background
 
     # 객체 생성
     player = Dragon()

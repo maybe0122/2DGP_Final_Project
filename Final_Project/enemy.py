@@ -15,7 +15,7 @@ class Enemy1:
         self.dir_x = 0
         self.dir_y = 0
         self.health = 50
-        self.damage = 10
+        self.enemy_damage = 10
         self.face_dir = -1
 
 
@@ -38,11 +38,12 @@ class Enemy1:
         return self.x - 55, self.y - 45, self.x + 55, self.y + 45
 
     def handle_collision(self, other, group):
+        print(play_state.attacks)
         if group == 'player:enemy':
             game_world.remove_object(self)
         elif group == 'attack:enemy':       # self : enemy, other : attack
-            self.health -= other.damage
-            print(other.damage)
+            self.health -= play_state.player.player_damage
+            print(play_state.player.player_damage)
             if self.health <= 0:
                 play_state.player.score += 100
                 game_world.remove_object(self)

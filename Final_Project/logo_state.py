@@ -22,6 +22,7 @@ def update():
     logo_time += 0.01
 
 def draw():
+    global image
     clear_canvas()
     image.draw(750 // 2, 900 // 2)
     update_canvas()

@@ -1,7 +1,6 @@
 from pico2d import *
 
 import game_framework
-import count_state
 import play_state
 
 image = None
@@ -10,7 +9,7 @@ font = None
 def enter():
     global image, font
     image = load_image('source/image/title_2.png')
-    font = load_font('ENCR10B.TTF', 50)
+    font = load_font('source/font/ENCR10B.TTF', 50)
 
 def exit():
     global image
@@ -26,8 +25,7 @@ def handle_events():
                 if event.key == SDLK_ESCAPE:
                     game_framework.quit()
                 elif event.key == SDLK_SPACE:
-                    game_framework.change_state(count_state)
-                    # game_framework.change_state(play_state)
+                    game_framework.change_state(play_state)
 def draw():
     clear_canvas()
     image.draw(750 // 2, 900 // 2)
