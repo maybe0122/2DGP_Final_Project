@@ -17,7 +17,7 @@ from attack import Attack
 
 # item fall Speed
 PIXEL_PER_METER = (10.0 / 0.3)
-A_SPEED_KMPH = 15.0
+A_SPEED_KMPH = 20.0
 A_SPEED_MPM = (A_SPEED_KMPH * 1000.0 / 60.0)
 A_SPEED_MPS = (A_SPEED_MPM / 60.0)
 A_SPEED_PPS = (A_SPEED_MPS * PIXEL_PER_METER)
