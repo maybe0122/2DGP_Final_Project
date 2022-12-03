@@ -1,12 +1,18 @@
-objects = [[] for i in range(2)]
+depth = 2
+
+objects = [[] for _ in range(depth)]
 
 collision_group = dict()
+
+
 
 def add_object(o, depth):
     objects[depth].append(o)
 
+
 def add_objects(ol, depth):
     objects[depth] += ol
+
 
 def remove_object(o):
     for layer in objects:
@@ -17,20 +23,25 @@ def remove_object(o):
             return
     raise ValueError('Trying destroy non existing object')
 
+
 def all_object():
     for layer in objects:
         for o in layer:
             yield o
 
+
 def clear():
-    for o in all_object():
-        del o
-    for layer in objects:
-        layer.clear()
+    global objects
+    global collision_group
+
+    # nullify objects and collision group delete all the contained objects - automatic garbage collection
+    objects = [[] for _ in range(depth)]
+    collision_group = dict()
+
 
 def add_collision_pairs(a, b, group):
     if group not in collision_group:
-        print('add new group', group)
+        # print('add new group', group)
         collision_group[group] = [[], []]
 
     if a:
@@ -51,6 +62,7 @@ def all_collision_pairs():
         for a in pairs[0]:
             for b in pairs[1]:
                 yield a, b, group
+
 
 def remove_collision_object(o):
     for pairs in collision_group.values():
