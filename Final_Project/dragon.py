@@ -155,6 +155,10 @@ class Dragon:
         game_world.add_object(play_state.attacks, 1)
         game_world.add_collision_pairs(play_state.attacks, None, 'attack:enemy')
 
+        # play_state.attacks = Attack(self.x + 50, self.y, self.face_dir * 2)
+        # game_world.add_object(play_state.attacks, 1)
+        # game_world.add_collision_pairs(play_state.attacks, None, 'attack:enemy')
+
     def breath(self):
         play_state.attacks = Breath()
         game_world.add_object(play_state.attacks, 1)
