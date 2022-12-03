@@ -58,10 +58,10 @@ class Item:
                     other.health += 10
             elif self.type == 1:
                 other.speed += 0.01
-                print(other.speed)
+                # print(other.speed)
             elif self.type == 2:
                 play_state.player.player_damage += 10    # 데미지 조정 필요
-                print(play_state.player.player_damage)
+                # print(play_state.player.player_damage)
             elif self.type == 3:
                 play_state.player.score += random.randint(1, 6) * 100  # 100 ~ 500까지의 랜덤 점수 획득
             game_world.remove_object(self)
