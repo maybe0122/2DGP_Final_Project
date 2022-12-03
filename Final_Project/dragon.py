@@ -4,10 +4,10 @@ import game_framework
 import game_world
 import play_state
 import game_over_state
-from attack import Attack, Breath
+from attack import Attack
 
-#플레이어의 최대 체력
-MAX_HEALTH = 10
+# 플레이어의 최대 체력
+MAX_HEALTH = 100
 
 # Dragon Fly Speed
 PIXEL_PER_METER = (10.0 / 0.3)
@@ -23,13 +23,12 @@ FRAMES_PER_ACTION = 3
 
 
 # 이벤트 정의
-AD, AU, SD, SU, DD, DU, WD, WU, FIRE, BREATH = range(10)
+AD, AU, SD, SU, DD, DU, WD, WU, FIRE = range(9)
 
-event_name = ['AD', 'AU', 'SD', 'SU', 'DD', 'DU', 'WD', 'WU', 'FIRE', 'BREATH']
+event_name = ['AD', 'AU', 'SD', 'SU', 'DD', 'DU', 'WD', 'WU', 'FIRE']
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_j): FIRE,
-    (SDL_KEYDOWN, SDLK_k): BREATH,
     (SDL_KEYDOWN, SDLK_w): WD,
     (SDL_KEYDOWN, SDLK_a): AD,
     (SDL_KEYDOWN, SDLK_s): SD,
@@ -39,6 +38,7 @@ key_event_table = {
     (SDL_KEYUP, SDLK_s): SU,
     (SDL_KEYUP, SDLK_d): DU
 }
+
 
 # 상태 정의
 class IDLE:
@@ -50,8 +50,6 @@ class IDLE:
     def exit(self, event):
         if event == FIRE:
             self.basic_attack()
-        elif event is BREATH:
-            self.breath()
         self.dir_x, self.dir_y = 0, 0
 
     @staticmethod
@@ -61,6 +59,7 @@ class IDLE:
     @staticmethod
     def draw(self):
         self.image.clip_draw(int(self.frame) * 144, 128 * 3, 144, 128, self.x, self.y)
+
 
 class MOVE:
     def enter(self, event):
@@ -84,8 +83,6 @@ class MOVE:
     def exit(self, event):
         if event is FIRE:
             self.basic_attack()
-        elif event is BREATH:
-            self.breath()
 
     def do(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 3
@@ -95,16 +92,16 @@ class MOVE:
         self.y = clamp(0 + 54, self.y, 950 - 54)
         # print(self.event_que)
 
-
     def draw(self):
         self.image.clip_draw(int(self.frame) * 144, 128 * 3, 144, 128, self.x, self.y)
 
 
 # 상태 변환
 next_state = {
-    IDLE: {WU: MOVE, WD: MOVE, AU: MOVE, AD: MOVE, SU: MOVE, SD: MOVE, DU: MOVE, DD: MOVE, FIRE: IDLE, BREATH: IDLE},
-    MOVE: {WU: MOVE, WD: MOVE, AU: MOVE, AD: MOVE, SU: MOVE, SD: MOVE, DU: MOVE, DD: MOVE, FIRE: MOVE, BREATH: IDLE}
+    IDLE: {WU: MOVE, WD: MOVE, AU: MOVE, AD: MOVE, SU: MOVE, SD: MOVE, DU: MOVE, DD: MOVE, FIRE: IDLE},
+    MOVE: {WU: MOVE, WD: MOVE, AU: MOVE, AD: MOVE, SU: MOVE, SD: MOVE, DU: MOVE, DD: MOVE, FIRE: MOVE}
 }
+
 
 class Dragon:
     def __init__(self):
@@ -141,7 +138,6 @@ class Dragon:
         self.cur_state.draw(self)
         self.draw_health(self.health // 10)
         draw_rectangle(*self.get_bb())
-        # self.font.draw()
 
     def add_event(self, event):
         self.event_que.insert(0, event)
@@ -158,14 +154,6 @@ class Dragon:
         play_state.attacks = Attack(self.x, self.y, self.face_dir*2)
         game_world.add_object(play_state.attacks, 1)
         game_world.add_collision_pairs(play_state.attacks, None, 'attack:enemy')
-
-        # play_state.attacks = Attack(self.x + 50, self.y, self.face_dir * 2)
-        # game_world.add_object(play_state.attacks, 1)
-        # game_world.add_collision_pairs(play_state.attacks, None, 'attack:enemy')
-
-    def breath(self):
-        play_state.attacks = Breath()
-        game_world.add_object(play_state.attacks, 1)
 
     def draw_health(self, i):
         if i % 2 == 0:
