@@ -1,6 +1,7 @@
 import time
 frame_time = 0.0
 
+
 class GameState:
     def __init__(self, state):
         self.enter = state.enter
@@ -50,38 +51,23 @@ def get_prev_state():
         return None
 
 
-# def change_state(state):
-#     global stack
-#     print(stack)
-#     if (len(stack) > 0):
-#         # execute the current state's exit function
-#         stack[-1].exit()
-#         # remove the current state
-#         stack.pop()
-#     stack.append(state)
-#     state.enter()
-
 def change_state(state):
     global stack
-    # print(len(stack))
-    if (len(stack) >= 0):
+    if len(stack) >= 0:
         # execute the current state's exit function
-        # print(f'<{stack}>')
         for current in stack:   # remove the current state
             current.exit()
             stack.pop()
             if len(stack) > 0:
                 stack.pop()
-
     # add state in stack
     stack.append(state)
     state.enter()
-    # print([stack])
 
 
 def push_state(state):
     global stack
-    if (len(stack) > 0):
+    if len(stack) > 0:
         stack[-1].pause()
     stack.append(state)
     state.enter()
@@ -89,14 +75,14 @@ def push_state(state):
 
 def pop_state():
     global stack
-    if (len(stack) > 0):
+    if len(stack) > 0:
         # execute the current state's exit function
         stack[-1].exit()
         # remove the current state
         stack.pop()
 
     # execute resume function of the previous state
-    if (len(stack) > 0):
+    if len(stack) > 0:
         stack[-1].resume()
 
 
@@ -104,9 +90,11 @@ def quit():
     global running
     running = False
 
+
 def fill_states(*states):
     for state in states:
         stack.append(state)
+
 
 def run(start_state):
     global running, stack
@@ -126,18 +114,17 @@ def run(start_state):
         stack[-1].draw()
         global frame_time
         frame_time = time.time() - current_time
-        frame_rate = 1.0 / frame_time
         current_time += frame_time
 
     # repeatedly delete the top of the stack
-    while (len(stack) > 0):
+    while len(stack) > 0:
         stack[-1].exit()
         stack.pop()
+
 
 def test_game_framework():
     start_state = TestGameState('StartState')
     run(start_state)
-
 
 
 if __name__ == '__main__':
