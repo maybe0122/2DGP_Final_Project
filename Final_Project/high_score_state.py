@@ -1,5 +1,4 @@
 from pico2d import *
-import background
 import game_framework
 import title_state
 import save_score_state
@@ -10,19 +9,21 @@ score = None
 name = None
 data = []
 sorted_data = []
+menu_image = None
 
 
 def enter():
-    global font, image, data, sorted_data
+    global font, image, data, sorted_data, menu_image
     font = load_font('source/font/ENCR10B.TTF', 50)
     image = load_image('source/image/background1.png')
+    menu_image = load_image('source/image/menu.png')
     data.append(save_score_state.load())
     sorted_data = sorted(data, key=lambda d: d['score'], reverse=True)
 
 
 def exit():
-    global font, image
-    del font, image
+    global font, image, menu_image
+    del font, image, menu_image
 
 
 def update():
@@ -30,15 +31,17 @@ def update():
 
 
 def draw():
-    global image
+    global image, menu_image, font
     i = 1
     clear_canvas()
     image.draw(get_canvas_width() // 2, get_canvas_height() // 2)
-    font.draw(get_canvas_width()//2, get_canvas_height()//2, 'HIGH SCORE', (0, 0, 0))
+    menu_image.clip_draw(235, 290, 245, 180, get_canvas_width() // 2, get_canvas_height() // 2, 245 * 2, 180 * 2)
+    menu_image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2 + 200, 138 * 3, 50 * 2)
+    font.draw(get_canvas_width() // 2 - 150, get_canvas_height() // 2 + 200, 'HIGH SCORE', (200, 0, 0))
     for sd in sorted_data:
-        font.draw(get_canvas_width()//2 - 300, get_canvas_height()//2 - i * 40, f"{i}. {sd['name'][0]} {sd['name'][1]} {sd['name'][2]} | {sd['score']}")
+        font.draw(get_canvas_width()//2 - 200, get_canvas_height()//2 + 200 - i * 100, f"{i}.{sd['name'][0]}{sd['name'][1]}{sd['name'][2]}:{sd['score']}", (251, 250, 180))
         i += 1
-        if i == 11:
+        if i == 4:
             break
     update_canvas()
 
