@@ -38,8 +38,10 @@ class TestGameState:
     def draw(self):
         print("State [%s] draw" % self.name)
 
+
 running = None
 stack = []
+
 
 def get_prev_state():
     try:
@@ -47,16 +49,34 @@ def get_prev_state():
     except:
         return None
 
+
+# def change_state(state):
+#     global stack
+#     print(stack)
+#     if (len(stack) > 0):
+#         # execute the current state's exit function
+#         stack[-1].exit()
+#         # remove the current state
+#         stack.pop()
+#     stack.append(state)
+#     state.enter()
+
 def change_state(state):
     global stack
-    if (len(stack) > 0):
+    # print(len(stack))
+    if (len(stack) >= 0):
         # execute the current state's exit function
-        stack[-1].exit()
-        # remove the current state
-        stack.pop()
+        # print(f'<{stack}>')
+        for current in stack:   # remove the current state
+            current.exit()
+            stack.pop()
+            if len(stack) > 0:
+                stack.pop()
+
+    # add state in stack
     stack.append(state)
     state.enter()
-
+    # print([stack])
 
 
 def push_state(state):
@@ -65,7 +85,6 @@ def push_state(state):
         stack[-1].pause()
     stack.append(state)
     state.enter()
-
 
 
 def pop_state():
@@ -79,7 +98,6 @@ def pop_state():
     # execute resume function of the previous state
     if (len(stack) > 0):
         stack[-1].resume()
-
 
 
 def quit():
