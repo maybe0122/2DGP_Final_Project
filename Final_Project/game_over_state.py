@@ -1,7 +1,6 @@
 import game_framework
 from pico2d import *
 import save_score_state
-import background
 
 image = None
 font = None
@@ -33,3 +32,6 @@ def draw():
 
 def handle_events():
     events = get_events()
+    for event in events:
+        if event.type == SDL_QUIT:
+            game_framework.quit()
