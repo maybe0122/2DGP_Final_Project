@@ -9,7 +9,7 @@ font = None
 def enter():
     global image, font
     image = load_image('source/image/menu.png')
-    font = load_font('source/font/ENCR10B.TTF')
+    font = load_font('source/font/ENCR10B.TTF', 25)
 
 def exit():
     global image, font
@@ -26,10 +26,10 @@ def draw():
     image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2 + 100, 138 * 2.5, 50 * 1.5)
     image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2, 138 * 2.5, 50 * 1.5)
     image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2 - 100, 138 * 2.5, 50 * 1.5)
-    # 폰트 위치 수정하기
-    font.draw(get_canvas_width()//2 - 100, get_canvas_height()//2 + 100, 'B : Back to Play', (255, 0, 0))
-    font.draw(get_canvas_width()//2 - 100, get_canvas_height()//2, 'R : Play New Game', (255, 0, 0))
-    font.draw(get_canvas_width()//2 - 100, get_canvas_height()//2 - 100, 'ESC : Back to title', (255, 0, 0))
+
+    font.draw(get_canvas_width()//2 - 115, get_canvas_height()//2 + 103, 'B : Back to Play', (251, 250, 180))
+    font.draw(get_canvas_width()//2 - 120, get_canvas_height()//2 + 3, 'R : Play New Game', (251, 250, 180))
+    font.draw(get_canvas_width()//2 - 140, get_canvas_height()//2 - 100, 'ESC : Back to title', (251, 250, 180))
     update_canvas()
 
 def handle_events():
