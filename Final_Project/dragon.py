@@ -3,10 +3,11 @@ from pico2d import *
 import game_framework
 import game_world
 import play_state
+import game_over_state
 from attack import Attack, Breath
 
 #플레이어의 최대 체력
-MAX_HEALTH = 100
+MAX_HEALTH = 10
 
 # Dragon Fly Speed
 PIXEL_PER_METER = (10.0 / 0.3)
@@ -146,6 +147,9 @@ class Dragon:
         self.event_que.insert(0, event)
 
     def handle_event(self, event):
+        if self.health <= 0:
+            game_framework.change_state(game_over_state)
+
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
