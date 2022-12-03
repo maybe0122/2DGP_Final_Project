@@ -6,6 +6,7 @@ import high_score_state
 
 font = None
 image = None
+menu_image = None
 name = []
 name_count = 0
 score = None
@@ -13,44 +14,45 @@ data = dict()
 
 
 def enter():
-    global font, image, score
+    global font, image, score, menu_image
     font = load_font('source/font/ENCR10B.TTF', 50)
     image = load_image('source/image/background1.png')
+    menu_image = load_image('source/image/menu.png')
     score = play_state.player.score
 
 
 
 def exit():
-    global font, image
-    del font, image
+    global font, image, menu_image
+    del font, image, menu_image
 
 
 def update():
     global name_count, name
-    if name_count == 3:
+    if name_count == 4:
         name_count = 0
         save()
         name = []
-
         game_framework.change_state(high_score_state)
 
 
 def draw():
-    global image
+    global image, menu_image, font
     clear_canvas()
     image.draw(get_canvas_width() // 2, get_canvas_height() // 2)
 
-    font.draw(get_canvas_width() // 2 - 60, get_canvas_height() // 2, f'SCORE : {score}', (0, 0, 0))
-    font.draw(get_canvas_width() // 2 - 60, get_canvas_height() // 2 - 30, 'NAME  : _ _ _', (0, 0, 0))
+    menu_image.clip_draw(235, 290, 245, 180, get_canvas_width() // 2, get_canvas_height() // 2, 245 * 2, 180 * 2)
+    font.draw(get_canvas_width() // 2 - 200, get_canvas_height() // 2 + 70, f'SCORE:{score}', (251, 250, 180))
+    font.draw(get_canvas_width() // 2 - 200, get_canvas_height() // 2 - 40, 'NAME : _ _ _', (251, 250, 180))
     if name_count == 1:
-        font.draw(get_canvas_width() // 2 - 30, get_canvas_height() // 2 - 30, f'{name[0]}', (0, 0, 0))
+        font.draw(get_canvas_width() // 2 + 10, get_canvas_height() // 2 - 40, f'{name[0]}', (255, 255, 255))
     if name_count == 2:
-        font.draw(get_canvas_width() // 2 - 30, get_canvas_height() // 2 - 30, f'{name[0] }', (0, 0, 0))
-        font.draw(get_canvas_width() // 2, get_canvas_height() // 2 - 30, f'{name[1]}', (0, 0, 0))
+        font.draw(get_canvas_width() // 2 + 10, get_canvas_height() // 2 - 40, f'{name[0]}', (255, 255, 255))
+        font.draw(get_canvas_width() // 2 + 70, get_canvas_height() // 2 - 40, f'{name[1]}', (255, 255, 255))
     if name_count == 3:
-        font.draw(get_canvas_width() // 2 - 30, get_canvas_height() // 2 - 30, f'{name[0] }', (0, 0, 0))
-        font.draw(get_canvas_width() // 2, get_canvas_height() // 2 - 30, f'{name[1] }', (0, 0, 0))
-        font.draw(get_canvas_width()//2 + 30, get_canvas_height()//2 - 30, f'{name[2]}', (0, 0, 0))
+        font.draw(get_canvas_width() // 2 + 10, get_canvas_height() // 2 - 40, f'{name[0]}', (255, 255, 255))
+        font.draw(get_canvas_width() // 2 + 70, get_canvas_height() // 2 - 40, f'{name[1]}', (255, 255, 255))
+        font.draw(get_canvas_width() // 2 + 130, get_canvas_height() // 2 - 40, f'{name[2]}', (255, 255, 255))
 
     update_canvas()
 
@@ -65,6 +67,12 @@ def handle_events():
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_ESCAPE:
                 game_framework.quit()
+            elif event.key == SDLK_RETURN:
+                if name_count >= 3:
+                    name_count += 1
+            elif event.key == SDLK_SPACE:
+                if name_count >= 3:
+                    name_count += 1
             elif event.key == SDLK_a:
                 name.append('A')
                 name_count += 1
@@ -148,7 +156,6 @@ def handle_events():
 def save():
     global data
     data = {'score': score, 'name': name}
-    # print(data)
     with open('game.sav', 'wb') as f:
         pickle.dump(data, f)
 
@@ -156,5 +163,4 @@ def save():
 def load():
     with open('game.sav', 'rb') as f:
         out_data = pickle.load(f)
-        # print(out_data)
     return out_data
