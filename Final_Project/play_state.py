@@ -1,14 +1,12 @@
 from pico2d import *
 import game_framework
 import game_world
+import menu_state
+import random
 
 from dragon import Dragon
 from enemy import Enemy1
 from background import Background
-
-import title_state
-import menu_state
-import random
 
 
 player = None
@@ -17,6 +15,7 @@ background = None
 attacks = None
 items = None
 explosions = None
+
 
 def handle_events():
     events = get_events()
@@ -59,24 +58,28 @@ def update():
 
     for a, b, group in game_world.all_collision_pairs():
         if collide(a, b):
-            #print('COLLISION ', group)
             a.handle_collision(b, group)
             b.handle_collision(a, group)
+
 
 def draw():
     clear_canvas()
     draw_world()
     update_canvas()
 
+
 def draw_world():
     for game_object in game_world.all_object():
         game_object.draw()
 
+
 def pause():
     pass
 
+
 def resume():
     pass
+
 
 def test_self():
     import play_state
@@ -84,6 +87,7 @@ def test_self():
     pico2d.open_canvas(800, 950)
     game_framework.run(play_state)
     pico2d.clear_canvas()
+
 
 def collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -95,6 +99,7 @@ def collide(a, b):
     if bottom_a > top_b: return False
 
     return True
+
 
 if __name__ == '__main__':
     test_self()
