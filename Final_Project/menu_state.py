@@ -23,9 +23,9 @@ def draw():
     clear_canvas()
     play_state.draw_world()
     image.clip_draw(235, 290, 245, 180, get_canvas_width() // 2, get_canvas_height() // 2, 245 * 2, 180 * 2)
-    image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2 + 100, 138 * 2.5, 50 * 1.5)
-    image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2, 138 * 2.5, 50 * 1.5)
-    image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2 - 100, 138 * 2.5, 50 * 1.5)
+    image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2 + 100, 138 * 3, 50 * 1.5)
+    image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2, 138 * 3, 50 * 1.5)
+    image.clip_draw(188, 223, 138, 50, get_canvas_width() // 2, get_canvas_height() // 2 - 100, 138 * 3, 50 * 1.5)
 
     font.draw(get_canvas_width()//2 - 115, get_canvas_height()//2 + 103, 'B : Back to Play', (251, 250, 180))
     font.draw(get_canvas_width()//2 - 120, get_canvas_height()//2 + 3, 'R : Play New Game', (251, 250, 180))
