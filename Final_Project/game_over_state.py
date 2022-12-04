@@ -1,6 +1,7 @@
 import game_framework
 from pico2d import *
 import save_score_state
+import play_state
 
 image = None
 font = None
@@ -10,6 +11,7 @@ def enter():
     global image, font
     image = load_image('source/image/background1.png')
     font = load_font('source/font/ENCR10B.TTF', 100)
+    play_state.background.bgm.stop()
 
 def exit():
     global image
