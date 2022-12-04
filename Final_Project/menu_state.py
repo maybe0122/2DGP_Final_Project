@@ -6,17 +6,21 @@ import play_state
 image = None
 font = None
 
+
 def enter():
     global image, font
     image = load_image('source/image/menu.png')
     font = load_font('source/font/ENCR10B.TTF', 25)
 
+
 def exit():
     global image, font
     del image, font
 
+
 def update():
     pass
+
 
 def draw():
     global image, font
@@ -31,6 +35,7 @@ def draw():
     font.draw(get_canvas_width()//2 - 120, get_canvas_height()//2 + 3, 'R : Play New Game', (251, 250, 180))
     font.draw(get_canvas_width()//2 - 140, get_canvas_height()//2 - 100, 'ESC : Back to title', (251, 250, 180))
     update_canvas()
+
 
 def handle_events():
     global new
@@ -47,8 +52,10 @@ def handle_events():
                 case pico2d.SDLK_r:  # restart game
                     game_framework.change_state(play_state)
 
+
 def pause():
     pass
+
 
 def resume():
     pass
