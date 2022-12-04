@@ -5,7 +5,6 @@ objects = [[] for _ in range(depth)]
 collision_group = dict()
 
 
-
 def add_object(o, depth):
     objects[depth].append(o)
 
@@ -41,7 +40,6 @@ def clear():
 
 def add_collision_pairs(a, b, group):
     if group not in collision_group:
-        # print('add new group', group)
         collision_group[group] = [[], []]
 
     if a:
