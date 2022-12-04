@@ -1,5 +1,4 @@
 from pico2d import *
-
 import game_framework
 import play_state
 
@@ -9,15 +8,15 @@ title_font = None
 
 
 def enter():
-    global image, font, title_font
+    global image, font, title_font, bgm
     image = load_image('source/image/title_2.png')
     font = load_font('source/font/ENCR10B.TTF', 50)
     title_font = load_font('source/font/ENCR10B.TTF', 70)
 
 
 def exit():
-    global image
-    del image
+    global image, font, title_font
+    del image, font, title_font
 
 
 def handle_events():
