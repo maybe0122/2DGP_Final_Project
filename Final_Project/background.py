@@ -17,9 +17,9 @@ class Background:
         self.x, self.y = get_canvas_width() // 2, get_canvas_height() // 2
         self.y2 = get_canvas_height() // 2 + 986
         self.speed = SCROLL_SPEED_PPS
-        # self.bgm = load_music()
-        # self.bgm.set_volume(32)
-        # self.bgm.repeat_play()
+        self.bgm = load_music('source/sound/game_bgm.mp3')
+        self.bgm.set_volume(32)
+        self.bgm.repeat_play()
 
     def draw(self):
         self.image.draw(self.x, self.y)
