@@ -21,7 +21,6 @@ def enter():
     score = play_state.player.score
 
 
-
 def exit():
     global font, image, menu_image
     del font, image, menu_image
