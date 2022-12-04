@@ -1,6 +1,4 @@
 from pico2d import *
-
-from background import Background
 import dragon
 import game_world
 import game_framework
@@ -44,7 +42,7 @@ class Item:
             self.image.clip_draw(326, 353 - 305, 64, 64, self.x, self.y, 32, 32)
         elif self.type == 3:
             self.image.clip_draw(513, 353 - 305, 64, 64, self.x, self.y, 32, 32)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
         self.y += self.velocity * A_SPEED_PPS * game_framework.frame_time

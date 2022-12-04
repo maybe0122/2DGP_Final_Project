@@ -24,7 +24,7 @@ class Enemy1:
         self.health = 50
         self.enemy_damage = 10
         self.face_dir = -1
-        self.timer = 20
+        self.timer = 15
 
         if Enemy1.ex_sound == None:
             Enemy1.ex_sound = load_wav('source/sound/explosion.wav')
@@ -37,8 +37,8 @@ class Enemy1:
         self.image.clip_composite_draw(0, 1024 - 190, 110, 90, 0, 'v', self.x, self.y, 100, 90)
         if self.timer <= 0:
             self.basic_attack()
-            self.timer = 20
-        draw_rectangle(*self.get_bb())
+            self.timer = 15
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
         if self.timer > 0:
@@ -95,7 +95,7 @@ class Enemy2:
             Enemy2.image = load_image('source/image/aircrafts.png')
     def draw(self):
         self.image.clip_composite_draw(225, 1024 - 90, 110, 90, 0, 'v', self.x, self.y, 100, 90)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
         self.y += self.face_dir * A_SPEED_PPS * game_framework.frame_time
@@ -130,26 +130,24 @@ class Enemy2:
                 self.explosion_animation()
                 self.drop_item()
 
-class Boss:
-    image = None
-
-    def __init__(self, x=0, y=0):
-        self.x, self.y = x, y
-        self.dir_x = 0
-        self.dir_y = 0
-
-        if Boss.image == None:
-            Boss.image = load_image('source/image/boss.png')
-
-    def draw(self):
-        pass
-
-    def update(self):
-        pass
-
-    def get_bb(self):
-        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
-
-    def handle_collision(self, other, group):
-        if group == 'player:enemy':
-            game_world.remove_object(self)
+# class Boss:
+#     image = None
+#
+#     def __init__(self, x=0, y=0):
+#         self.x, self.y = x, y
+#
+#         if Boss.image == None:
+#             Boss.image = load_image('source/image/boss.png')
+#
+#     def draw(self):
+#         pass
+#
+#     def update(self):
+#         pass
+#
+#     def get_bb(self):
+#         return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+#
+#     def handle_collision(self, other, group):
+#         if group == 'player:enemy':
+#             game_world.remove_object(self)

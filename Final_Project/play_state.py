@@ -1,11 +1,8 @@
-import toml
 from pico2d import *
 import game_framework
 import game_world
 import menu_state
 import random
-import pickle
-import enemy
 from dragon import Dragon
 from enemy import Enemy1, Enemy2
 from background import Background
@@ -47,9 +44,108 @@ wave3 = [
     {'name': "Enemy2", 'x': 74 + 148 * 4, 'y': 1600}
 ]
 
-boss = [
-    {'name': 'Boss', 'x': 0, 'y': 0}
+wave4 = [
+    {'name': 'Enemy1', 'x': 70, 'y': 700},
+    {'name': 'Enemy1', 'x': 70 + 140, 'y': 700},
+    {'name': 'Enemy1', 'x': 70 + 140 * 2, 'y': 700},
+    {'name': 'Enemy1', 'x': 70 + 140 * 3, 'y': 700},
+    {'name': 'Enemy1', 'x': 70 + 140 * 4, 'y': 700}
 ]
+
+wave5 = [
+    {'name': "Enemy2", 'x': 74, 'y': 1600},
+    {'name': "Enemy2", 'x': 74 + 148, 'y': 1400},
+    {'name': "Enemy2", 'x': 74 + 148 * 2, 'y': 1200},
+    {'name': "Enemy2", 'x': 74 + 148 * 3, 'y': 1400},
+    {'name': "Enemy2", 'x': 74 + 148 * 4, 'y': 1600},
+    {'name': "Enemy2", 'x': 74, 'y': 1600 + 400},
+    {'name': "Enemy2", 'x': 74 + 148, 'y': 1400 + 400},
+    {'name': "Enemy2", 'x': 74 + 148 * 2, 'y': 1200 + 400},
+    {'name': "Enemy2", 'x': 74 + 148 * 3, 'y': 1400 + 400},
+    {'name': "Enemy2", 'x': 74 + 148 * 4, 'y': 1600 + 400}
+]
+
+wave6 = [
+    {'name': 'Enemy1', 'x': 70, 'y': 800},
+    {'name': 'Enemy1', 'x': 70 + 140, 'y': 650},
+    {'name': 'Enemy1', 'x': 70 + 140 * 2, 'y': 800},
+    {'name': 'Enemy1', 'x': 70 + 140 * 3, 'y': 650},
+    {'name': 'Enemy1', 'x': 70 + 140 * 4, 'y': 800}
+]
+
+wave7 = [
+    {'name': "Enemy2", 'x': 74, 'y': 1600},
+    {'name': "Enemy2", 'x': 74 + 148, 'y': 1400},
+    {'name': "Enemy2", 'x': 74 + 148 * 2, 'y': 1200},
+    {'name': "Enemy2", 'x': 74 + 148 * 3, 'y': 1400},
+    {'name': "Enemy2", 'x': 74 + 148 * 4, 'y': 1600},
+    {'name': "Enemy2", 'x': 74, 'y': 1600 + 200},
+    {'name': "Enemy2", 'x': 74 + 148, 'y': 1400 + 200},
+    {'name': "Enemy2", 'x': 74 + 148 * 2, 'y': 1200 + 200},
+    {'name': "Enemy2", 'x': 74 + 148 * 3, 'y': 1400 + 200},
+    {'name': "Enemy2", 'x': 74 + 148 * 4, 'y': 1600 + 200},
+    {'name': "Enemy2", 'x': 74, 'y': 1600 + 400},
+    {'name': "Enemy2", 'x': 74 + 148, 'y': 1400 + 400},
+    {'name': "Enemy2", 'x': 74 + 148 * 2, 'y': 1200 + 400},
+    {'name': "Enemy2", 'x': 74 + 148 * 3, 'y': 1400 + 400},
+    {'name': "Enemy2", 'x': 74 + 148 * 4, 'y': 1600 + 400}
+]
+
+wave8 = [
+    {'name': 'Enemy1', 'x': 74, 'y': 750},
+    {'name': 'Enemy1', 'x': 74 + 148, 'y': 750},
+    {'name': 'Enemy1', 'x': 74 + 148 * 2, 'y': 750},
+    {'name': 'Enemy1', 'x': 74 + 148 * 3, 'y': 750},
+    {'name': 'Enemy1', 'x': 74 + 148 * 4, 'y': 750},
+    {'name': 'Enemy1', 'x': 74, 'y': 600},
+    {'name': 'Enemy1', 'x': 74 + 148, 'y': 600},
+    {'name': 'Enemy1', 'x': 74 + 148 * 2, 'y': 600},
+    {'name': 'Enemy1', 'x': 74 + 148 * 3, 'y': 600},
+    {'name': 'Enemy1', 'x': 74 + 148 * 4, 'y': 600}
+]
+
+wave9 = [
+    {'name': "Enemy2", 'x': 74, 'y': 900},
+    {'name': "Enemy2", 'x': 74, 'y': 1100},
+    {'name': "Enemy2", 'x': 74, 'y': 1300},
+    {'name': "Enemy2", 'x': 74, 'y': 1500},
+    {'name': "Enemy2", 'x': 74, 'y': 1700},
+    {'name': "Enemy2", 'x': 74, 'y': 1900},
+    {'name': "Enemy2", 'x': 74, 'y': 2100},
+    {'name': "Enemy2", 'x': 740 - 74, 'y': 900},
+    {'name': "Enemy2", 'x': 740 - 74, 'y': 1100},
+    {'name': "Enemy2", 'x': 740 - 74, 'y': 1300},
+    {'name': "Enemy2", 'x': 740 - 74, 'y': 1500},
+    {'name': "Enemy2", 'x': 740 - 74, 'y': 1700},
+    {'name': "Enemy2", 'x': 740 - 74, 'y': 1900},
+    {'name': "Enemy2", 'x': 740 - 74, 'y': 2100}
+]
+
+wave10 = [
+    {'name': "Enemy2", 'x': 123, 'y': 900},
+    {'name': "Enemy2", 'x': 123, 'y': 1100},
+    {'name': "Enemy2", 'x': 123, 'y': 1300},
+    {'name': "Enemy2", 'x': 123, 'y': 1500},
+    {'name': "Enemy2", 'x': 123, 'y': 1700},
+
+    {'name': "Enemy2", 'x': 369, 'y': 800},
+    {'name': "Enemy2", 'x': 369, 'y': 1000},
+    {'name': "Enemy2", 'x': 369, 'y': 1200},
+    {'name': "Enemy2", 'x': 369, 'y': 1400},
+    {'name': "Enemy2", 'x': 369, 'y': 1600},
+
+    {'name': "Enemy2", 'x': 615, 'y': 900},
+    {'name': "Enemy2", 'x': 615, 'y': 1100},
+    {'name': "Enemy2", 'x': 615, 'y': 1300},
+    {'name': "Enemy2", 'x': 615, 'y': 1500},
+    {'name': "Enemy2", 'x': 615, 'y': 1700}
+]
+
+
+
+# boss = [
+#     {'name': 'Boss', 'x': 0, 'y': 0}
+# ]
 
 def handle_events():
     events = get_events()
@@ -121,13 +217,27 @@ def update():
             b.handle_collision(a, group)
 
     if enemy_counter == 0:
-        n = random.randint(0, 3)
-        if n == 0:
-            load_enemy(wave1)
+        n = random.randint(1, 10 + 1)
         if n == 1:
+            load_enemy(wave1)
+        elif n == 2:
             load_enemy(wave2)
-        if n == 2:
+        elif n == 3:
             load_enemy(wave3)
+        elif n == 4:
+            load_enemy(wave4)
+        elif n == 5:
+            load_enemy(wave5)
+        elif n == 6:
+            load_enemy(wave6)
+        elif n == 7:
+            load_enemy(wave7)
+        elif n == 8:
+            load_enemy(wave8)
+        elif n == 9:
+            load_enemy(wave9)
+        elif n == 10:
+            load_enemy(wave10)
         wave_counter += 1
 
     # if wave_counter % 10 == 0:

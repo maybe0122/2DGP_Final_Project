@@ -9,6 +9,12 @@ A_SPEED_MPM = (A_SPEED_KMPH * 1000.0 / 60.0)
 A_SPEED_MPS = (A_SPEED_MPM / 60.0)
 A_SPEED_PPS = (A_SPEED_MPS * PIXEL_PER_METER)
 
+# Enemy Attack Speed
+E_SPEED_KMPH = 25.0
+E_SPEED_MPM = (E_SPEED_KMPH * 1000.0 / 60.0)
+E_SPEED_MPS = (E_SPEED_MPM / 60.0)
+E_SPEED_PPS = (E_SPEED_MPS * PIXEL_PER_METER)
+
 
 class Attack:
     image = None
@@ -20,7 +26,7 @@ class Attack:
 
     def draw(self):
         self.image.clip_composite_draw(370, 134 - 50, 80, 50, 3.141592 / 2, '', self.x, self.y + 64, 40, 20)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
         self.y += self.velocity * A_SPEED_PPS * game_framework.frame_time
@@ -51,10 +57,10 @@ class Enemy_Attack:
 
     def draw(self):
         self.image.clip_draw(450, 891, 11, 11, self.x, self.y - 45, 22, 22)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
-        self.y += self.velocity * A_SPEED_PPS * game_framework.frame_time
+        self.y += self.velocity * E_SPEED_PPS * game_framework.frame_time
 
         if self.y < 0:
             game_world.remove_object(self)

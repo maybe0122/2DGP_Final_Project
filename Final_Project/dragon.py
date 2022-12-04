@@ -139,7 +139,7 @@ class Dragon:
     def draw(self):
         self.cur_state.draw(self)
         self.draw_health(self.health // 10)
-        draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def add_event(self, event):
         self.event_que.insert(0, event)
