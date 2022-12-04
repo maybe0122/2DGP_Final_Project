@@ -1,12 +1,11 @@
 from pico2d import *
 
-import background
+from background import Background
 import dragon
 import game_world
 import game_framework
 import random
 import play_state
-from attack import Attack
 
 # item type
 # 0 : 체력 회복
@@ -22,14 +21,19 @@ A_SPEED_MPM = (A_SPEED_KMPH * 1000.0 / 60.0)
 A_SPEED_MPS = (A_SPEED_MPM / 60.0)
 A_SPEED_PPS = (A_SPEED_MPS * PIXEL_PER_METER)
 
+
 class Item:
     image = None
+    get_sound = None
 
     def __init__(self, x=740, y=450, velocity=1):
         if Item.image == None:
             Item.image = load_image('source/image/item_set.png')
         self.x, self.y, self.velocity = x, y, velocity
         self.type = random.randint(0, 3)
+        if Item.get_sound == None:
+            Item.get_sound = load_wav('source/sound/get_item.wav')
+            Item.get_sound.set_volume(32)
 
     def draw(self):
         if self.type == 0:
@@ -58,10 +62,9 @@ class Item:
                     other.health += 10
             elif self.type == 1:
                 other.speed += 0.01
-                # print(other.speed)
             elif self.type == 2:
-                play_state.player.player_damage += 10    # 데미지 조정 필요
-                # print(play_state.player.player_damage)
+                play_state.player.player_damage += 5
             elif self.type == 3:
                 play_state.player.score += random.randint(1, 6) * 100  # 100 ~ 500까지의 랜덤 점수 획득
+            Item.get_sound.play()
             game_world.remove_object(self)
