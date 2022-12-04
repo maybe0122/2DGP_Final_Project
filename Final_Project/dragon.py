@@ -90,7 +90,6 @@ class MOVE:
         self.y += self.dir_y * FLY_SPEED_PPS * game_framework.frame_time * self.speed
         self.x = clamp(0 + 72, self.x, 800 - 72)
         self.y = clamp(0 + 54, self.y, 950 - 54)
-        # print(self.event_que)
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 144, 128 * 3, 144, 128, self.x, self.y)
@@ -123,6 +122,9 @@ class Dragon:
         self.cur_state.enter(self, None)
 
     def update(self):
+        if self.health <= 0:
+            game_framework.change_state(game_over_state)
+
         self.cur_state.do(self)
 
         if self.event_que:
@@ -143,9 +145,6 @@ class Dragon:
         self.event_que.insert(0, event)
 
     def handle_event(self, event):
-        if self.health <= 0:
-            game_framework.change_state(game_over_state)
-
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
@@ -154,6 +153,7 @@ class Dragon:
         play_state.attacks = Attack(self.x, self.y, self.face_dir*2)
         game_world.add_object(play_state.attacks, 1)
         game_world.add_collision_pairs(play_state.attacks, None, 'attack:enemy')
+        game_world.add_collision_pairs(play_state.attacks, None, 'attack:enemy_attack')
 
     def draw_health(self, i):
         if i % 2 == 0:
@@ -165,9 +165,10 @@ class Dragon:
             self.health_image.clip_draw(314, 15, 230, 230, 15 + 35 * (i // 2), 850, 35, 35)
 
     def get_bb(self):
-        return self.x - 72, self.y - 64, self.x + 72, self.y + 64
+        return self.x - 24, self.y - 52, self.x + 24, self.y + 50
 
     def handle_collision(self, other, group):
         if group == 'player:enemy':
             self.health -= 10
-
+        if group == 'player:enemy_attack':
+            pass
